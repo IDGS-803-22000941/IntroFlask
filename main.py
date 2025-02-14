@@ -13,12 +13,28 @@ def operas():
     return render_template('OperasBas.html')
 
 
-@app.route('/resultado', methods=['GET', 'POST'])
+@app.route('/OperasBas', methods=['GET', 'POST'])
 def resultado():
-    if request.method == "POST":
-        num1 = request.form.get("n1")
-        num2 = request.form.get("n2")
-        return "La suma de {} + {} es: {}".format(num1, num2, int(num1)+int(num2))
+    resultado = ''
+    
+    if request.method == 'POST':
+        n1 = int(request.form.get('n1'))
+        n2 = int(request.form.get('n2'))
+        operacion = request.form.get('operacion')
+        
+        if operacion == 'suma':
+            resultado = n1 + n2
+        elif operacion == 'resta':
+            resultado = n1 - n2
+        elif operacion == 'multiplicacion':
+            resultado = n1 * n2
+        elif operacion == 'division':
+            if n2 != 0:
+                resultado = n1 / n2
+            else:
+                resultado = 'No se puede dividir entre 0'
+    
+    return render_template('OperasBas.html', resultado=resultado)
 
 @app.route('/ejemplo1')
 def ejemplo1():
